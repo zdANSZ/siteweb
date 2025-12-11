@@ -2,6 +2,25 @@ document.addEventListener('DOMContentLoaded', function() {
     atualizarMenu();
 });
 
+// Controla esconder/mostrar da navbar com base na direção do scroll
+;(function controlNavbarOnScroll(){
+    let lastScroll = 0;
+    const header = document.querySelector('header');
+    if (!header) return;
+
+    window.addEventListener('scroll', function() {
+        const current = window.scrollY || window.pageYOffset;
+        // quando descer a página e passar 100px, esconder o header
+        if (current > lastScroll && current > 100) {
+            header.classList.add('hidden');
+        } else {
+            // quando subir ou estiver no topo, mostra o header
+            header.classList.remove('hidden');
+        }
+        lastScroll = current <= 0 ? 0 : current; // evita negativos
+    }, { passive: true });
+})();
+
 function atualizarMenu() {
     const navUl = document.querySelector('header nav ul');
     const usuarioId = localStorage.getItem('usuario_id');

@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="container">
-            <h1>Zenith</h1>
+            <a href="index.html" class="logo">Zenith</a>
             <nav>
                 <ul></ul>
             </nav>
@@ -23,9 +23,40 @@
                 <p>Carregando frota...</p>
             </div>
         </div>
+
+        <div id="calculator-container" class="container">
+            <h2>Calculadora de Aluguel</h2>
+
+            <div class="input-group valor">
+                <label for="carValue">Valor Mensal do Carro</label>
+                <input type="number" id="carValue" placeholder="25000">
+            </div>
+
+            <div class="input-group">
+                <label for="duration">Tempo de Aluguel</label>
+                <input type="number" id="duration" placeholder="3">
+            </div>
+
+            <div class="input-group">
+                <label for="unit">Unidade de Tempo</label>
+                <select id="unit">
+                    <option value="meses">Meses</option>
+                    <option value="semanas">Semanas</option>
+                </select>
+            </div>
+
+            <button id="calculateBtn">Calcular</button>
+
+            <div id="result">
+                <h3>Valor Total Estimado:</h3>
+                <div id="totalCost">R$ 0,00</div>
+                <small id="logicApplied"></small>
+            </div>
+        </div>
     </main>
 
     <script src="frota.js"></script>
+    <script src="calculadora.js"></script>
     <script src="menu.js"></script>
 </body>
 </html>

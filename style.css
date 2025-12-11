@@ -3,14 +3,20 @@
 
 /* VARIÁVEIS DE CORES (PALETA PREMIUM) */
 :root {
-    --bg-color: #121212;       /* Preto Profundo */
-    --card-bg: #1e1e1e;        /* Cinza Escuro para cards */
-    --text-color: #e0e0e0;     /* Branco Suave */
-    --gold-primary: #d4af37;   /* Dourado Clássico */
-    --gold-hover: #b4932a;     /* Dourado mais escuro para hover */
-    --border-color: #333333;   /* Bordas sutis */
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra dramática */
-    --bg-image: url('https://s2.best-wallpaper.net/wallpaper/1920x1080/1612/Bugatti-Veyron-Grand-Sport-164-supercars-villa-luxury-cars_1920x1080.jpg'); /* Imagem de background fornecida pelo usuário */
+    --bg-color: #f7f8fa;       /* Fundo claro principal */
+    --card-bg: #ffffffcc;      /* Fundo dos cards (branco translúcido) */
+    --text-color: #111827;     /* Texto principal escuro */
+    --muted-color: #6b7280;    /* Texto secundário / descrições */
+    --gold-primary: #111111;   /* Preto fosco (substitui o dourado) */
+    --gold-hover: #0f0f0f;     /* Hover preto fosco */
+    --border-color: rgba(16,24,40,0.06);   /* Bordas sutis claras */
+    --shadow: 0 8px 24px rgba(16,24,40,0.06); /* Sombra suave para tema claro */
+    /* Substitua o valor de --bg-image pelo link da sua imagem de fundo.
+       Exemplos:
+       - Link externo: url('https://exemplo.com/imagem.jpg')
+       - Arquivo local na pasta do projeto: url('images/bg.jpg')
+       Mantenha as aspas simples dentro de url('...'). */
+    --bg-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230423/pngtree-collection-of-porsche-sports-cars-on-the-street-in-front-of-image_2490447.jpg'); /* Troque este URL pela sua imagem */
 }
 
 /* RESET BÁSICO */
@@ -42,10 +48,10 @@ body::before {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    /* Aplicar overlay escuro + blend para deixar sutil */
-    background-color: rgba(0,0,0,0.7);
-    background-blend-mode: multiply;
-    filter: blur(6px) brightness(0.6);
+    /* Aplicar overlay claro e dessaturação para tema branco minimalista */
+    background-color: rgba(255,255,255,0.78);
+    background-blend-mode: lighten;
+    filter: blur(6px) saturate(40%) brightness(1.02) contrast(0.9);
     transform: scale(1.02); /* evita bordas visíveis após blur */
 }
 
@@ -76,25 +82,109 @@ header .container {
     gap: 20px;
 }
 
+/* Logo styling */
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
 /* --- HEADER --- */
 header {
-    /* Glass effect: translucent background with blur */
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-    border: 1px solid rgba(255,255,255,0.04);
-    padding: 14px 0;
-    position: sticky;
+    /* Glass effect (mais transparente): fundo translúcido com blur */
+    background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.55));
+    border: 1px solid rgba(255,255,255,0.45);
+    padding: 12px 18px;
+    position: sticky; /* mantém no fluxo e não sobrepõe */
     top: 12px;
-    margin: 8px 0; /* dá espaço visual quando fixo */
-    z-index: 1100;
-    backdrop-filter: blur(8px) saturate(120%);
-    -webkit-backdrop-filter: blur(8px) saturate(120%);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    z-index: 1200;
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    box-shadow: 0 6px 18px rgba(16,24,40,0.04);
+    border-radius: 14px;
+    width: calc(100% - 48px);
+    max-width: 1100px;
+    margin: 8px auto; /* centraliza */
+    transition: transform 0.35s ease, opacity 0.35s ease, background 0.25s ease;
+}
+
+/* Quando a página rolar para baixo, aplicamos esta classe via JS para ocultar a navbar */
+header.hidden {
+    transform: translateY(-140%);
+    opacity: 0;
+}
+.plans-section h2 { text-align: center; margin-bottom: 6px; color: var(--text-color); }
+.plans-section .sub { text-align:center; color: var(--muted-color); margin-bottom: 24px; }
+
+.plans-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.plan-card {
+    background: var(--card-bg);
     border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid rgba(16,24,40,0.04);
+    box-shadow: 0 6px 20px rgba(16,24,40,0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.plan-card.featured {
+    border: 1px solid rgba(17,17,17,0.12);
+    transform: translateY(-6px);
+}
+
+.plan-card h3 { margin-top: 6px; color: var(--text-color); }
+.plan-card .price { font-size: 1.6rem; color: var(--gold-primary); font-weight:700; }
+.plan-card .price span { font-size: 0.9rem; color: var(--muted-color); margin-left:6px; }
+.plan-card ul { list-style: none; padding: 0; margin: 0; color: var(--muted-color); text-align:left; }
+.plan-card ul li { padding: 6px 0; border-bottom: 1px dashed rgba(16,24,40,0.03); }
+
+/* Feedbacks */
+.feedbacks-section { margin-top: 28px; padding-bottom: 24px; }
+.feedbacks-section h2 { margin-bottom: 8px; color: var(--text-color); }
+.feedbacks-section .sub { color: var(--muted-color); margin-bottom: 18px; }
+.feedback-list {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.feedback-item { background: var(--card-bg); padding: 16px; border-radius: 8px; box-shadow: var(--shadow); }
+.feedback-item .text { color: var(--text-color); margin-bottom: 8px; }
+.feedback-item .meta { color: var(--muted-color); font-size: 0.85rem; }
+
+@media (max-width: 700px) {
+    .plans-section { padding: 28px 0; }
+}
+
+/* Tornar grids responsivos: em telas menores usam auto-fit */
+@media (max-width: 1000px) {
+    .plans-grid { justify-content: center; }
+    .plan-card { flex: 1 1 320px; max-width: 320px; }
+    .feedback-list { justify-content: center; }
+    .feedback-item { flex: 1 1 300px; max-width: 340px; }
+}
+
+@media (min-width: 1001px) {
+    /* Desktop: force three columns if space allows */
+    .plan-card { flex: 1 1 30%; max-width: 32%; }
+    .feedback-item { flex: 1 1 30%; max-width: 32%; }
 }
 
 header h1 {
-    font-size: 1.6rem;
-    color: var(--gold-primary);
+    font-size: 1.5rem;
+    color: var(--text-color);
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -123,7 +213,7 @@ header nav ul li a {
 
 header nav ul li a:hover {
     color: var(--gold-primary);
-    background: rgba(212,175,55,0.06);
+    background: rgba(17,17,17,0.08);
     transform: translateY(-2px);
 }
 
@@ -131,7 +221,7 @@ header nav ul li a:hover {
 .cta-button, button {
     display: inline-block;
     background: linear-gradient(45deg, var(--gold-primary), var(--gold-hover));
-    color: #000;
+    color: #fff; /* Texto branco para melhor legibilidade */
     padding: 10px 22px;
     border: none;
     border-radius: 6px;
@@ -140,13 +230,14 @@ header nav ul li a:hover {
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 6px 18px rgba(16,24,40,0.06);
 }
 
 .cta-button:hover, button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+    box-shadow: 0 8px 26px rgba(16,24,40,0.08);
     background: linear-gradient(45deg, #fff, var(--gold-primary)); /* Brilho ao passar o mouse */
+    color: var(--text-color); /* Texto escuro no hover para garantir contraste sobre a parte branca */
 }
 
 button:disabled {
@@ -158,24 +249,21 @@ button:disabled {
 
 /* --- HERO SECTION --- */
 .hero {
-    /* Troque esta URL por uma foto de um carro de luxo escuro */
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1503376763036-066120622c74?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'); 
-    background-size: cover;
-    background-position: center;
-    padding: 120px 0;
+    background: transparent;
+    padding: 120px 0 80px 0;
     text-align: center;
-    border-bottom: 3px solid var(--gold-primary);
+    border-bottom: 3px solid rgba(0,0,0,0.04);
 }
 
 .hero h2 {
     font-size: 2.4rem;
-    color: #fff;
+    color: var(--text-color);
     margin-bottom: 20px;
 }
 
 .hero p {
     font-size: 1.2rem;
-    color: #ccc;
+    color: var(--muted-color);
     max-width: 600px;
     margin: 0 auto 40px auto;
 }
@@ -209,7 +297,7 @@ button:disabled {
     object-fit: cover;
     border-radius: 3px;
     margin-bottom: 15px;
-    filter: brightness(0.9); /* Imagens levemente mais escuras */
+    filter: brightness(0.95) saturate(80%); /* Imagens levemente dessaturadas para tema claro */
     transition: 0.3s;
 }
 
@@ -220,11 +308,11 @@ button:disabled {
 .car-card h3 {
     font-size: 1.5rem;
     margin-bottom: 5px;
-    color: #fff;
+    color: var(--text-color);
 }
 
 .car-card p {
-    color: #aaa;
+    color: var(--muted-color);
     font-size: 0.9rem;
     margin-bottom: 15px;
 }
@@ -236,7 +324,7 @@ button:disabled {
     font-weight: bold;
     display: block;
     margin: 20px 0;
-    border-top: 1px solid #333;
+    border-top: 1px solid rgba(16,24,40,0.04);
     padding-top: 15px;
 }
 
@@ -256,7 +344,7 @@ button:disabled {
 }
 
 .form-group label {
-    color: var(--gold-primary);
+    color: var(--text-color);
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -267,9 +355,9 @@ button:disabled {
 .form-group input {
     width: 100%;
     padding: 12px;
-    background-color: #2a2a2a;
-    border: 1px solid #444;
-    color: #fff;
+    background-color: #fbfbfd;
+    border: 1px solid rgba(16,24,40,0.06);
+    color: var(--text-color);
     border-radius: 6px;
     outline: none;
     transition: 0.3s;
@@ -277,50 +365,53 @@ button:disabled {
 
 .form-group input:focus {
     border-color: var(--gold-primary);
-    background-color: #333;
 }
 
+
+/* Ajustes finais: utilitários */
+.status-ok { color: #059669; }
+.status-erro { color: #dc2626; }
 /* --- TABELAS (MINHA CONTA) --- */
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: var(--card-bg);
-    color: #fff;
+    background-color: transparent;
+    color: var(--text-color);
 }
 
 th {
-    background-color: #000;
+    background-color: transparent;
     color: var(--gold-primary);
     padding: 15px;
     text-align: left;
     font-family: 'Playfair Display', serif;
-    border-bottom: 2px solid var(--gold-primary);
+    border-bottom: 2px solid rgba(16,24,40,0.04);
 }
 
 td {
     padding: 15px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid rgba(16,24,40,0.04);
 }
 
 tr:hover {
-    background-color: #252525;
+    background-color: rgba(16,24,40,0.02);
 }
 
 /* --- FOOTER --- */
 /* Footer com efeito glass, consistente com a navbar */
 footer {
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    color: #bdbdbd;
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.92));
+    color: var(--muted-color);
     text-align: center;
     padding: 30px 0;
     margin-top: 60px;
-    border: 1px solid rgba(255,255,255,0.04);
+    border: 1px solid var(--border-color);
     font-size: 0.85rem;
     text-transform: uppercase;
-    letter-spacing: 1.8px;
+    letter-spacing: 1.4px;
     backdrop-filter: blur(6px) saturate(110%);
     -webkit-backdrop-filter: blur(6px) saturate(110%);
-    box-shadow: 0 4px 18px rgba(0,0,0,0.45);
+    box-shadow: var(--shadow);
     border-radius: 10px;
     width: calc(100% - 48px);
     margin-left: 24px;
@@ -342,7 +433,7 @@ footer {
 }
 
 #calculator-container h2 {
-    color: var(--gold-primary);
+    color: var(--text-color);
     margin-bottom: 12px;
 }
 
@@ -352,7 +443,7 @@ footer {
 
 .input-group label {
     display: block;
-    color: #ddd;
+    color: var(--muted-color);
     font-size: 0.9rem;
     margin-bottom: 6px;
 }
@@ -361,9 +452,9 @@ footer {
     width: 100%;
     padding: 10px 12px;
     border-radius: 6px;
-    border: 1px solid #3a3a3a;
-    background: #222;
-    color: #fff;
+    border: 1px solid rgba(16,24,40,0.06);
+    background: #fbfbfd;
+    color: var(--text-color);
 }
 
 #result { margin-top: 18px; }
